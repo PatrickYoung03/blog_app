@@ -1,21 +1,35 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { createStackNavigator } from "react-navigation-stack";
+import { createAppContainer } from "react-navigation";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+import { Provider } from "./src/context/BlogContext";
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+import IndexScreen from "./src/screens/IndexScreen";
+import CreateScreen from "./src/screens/CreateScreen";
+import ShowScreen from "./src/screens/ShowScreen";
+import EditScreen from "./src/screens/EditScreen";
+
+const navigator = createStackNavigator(
+  {
+    Index: IndexScreen,
+    Create: CreateScreen,
+    Show: ShowScreen,
+    Edit: EditScreen,
   },
-});
+  {
+    initialRouteName: "Index",
+    defaultNavigationOptions: {
+      title: "Blogs",
+    },
+  }
+);
+
+const App = createAppContainer(navigator);
+
+export default () => {
+  return (
+    <Provider>
+      <App />
+    </Provider>
+  );
+};
